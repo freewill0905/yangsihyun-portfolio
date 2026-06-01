@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>양시현 포트폴리오 | 10년차 디지털 마케터</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --bg:    #08080f;
+  --bg2:   #0f0f1c;
+  --bg3:   #141428;
+  --gold:  #c8972a;
+  --gl:    #e4b84d;
+  --gb:    #f5cc6b;
+  --gg:    rgba(200,151,42,.26);
+  --teal:  #3a8fa8;
+  --tl:    #5db3cf;
+  --t1:    #f0ece4;
+  --t2:    #9a9080;
+  --t3:    #504c44;
+  --bd:    rgba(200,151,42,.17);
+  --bdl:   rgba(240,236,228,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif}
+
+/* grain */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.022;pointer-events:none;z-index:9000}
+
+/* progress line */
+#pbar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gb));z-index:8000;transition:width .5s ease}
+
+/* ─── SLIDE SYSTEM ─── */
+.sw{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:52px 72px;
+  opacity:0;pointer-events:none;transform:translateY(42px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);
+  z-index:0;overflow:hidden
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateY(0);z-index:2}
+.slide.exit-u{opacity:0;transform:translateY(-42px);z-index:1}
+.slide.exit-d{opacity:0;transform:translateY(42px);z-index:1}
+
+/* ─── NAVIGATION ─── */
+.dots{position:fixed;right:34px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:7000}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--t3);cursor:pointer;transition:all .3s ease}
+.dot.on{background:var(--gold);box-shadow:0 0 10px var(--gg);transform:scale(1.4)}
+.dot:hover:not(.on){background:var(--t2)}
+
+.arrows{position:fixed;bottom:34px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:7000}
+.abtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--bd);background:rgba(14,14,28,.85);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .3s ease;backdrop-filter:blur(12px)}
+.abtn:hover{border-color:var(--gold);color:var(--gold);box-shadow:0 0 16px var(--gg)}
+
+.ctr{position:fixed;bottom:42px;right:48px;font-size:11px;color:var(--t3);letter-spacing:.12em;z-index:7000}
+.phint{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--t3);letter-spacing:.07em;z-index:7000}
+
+/* edit hint */
+.ehint{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:rgba(200,151,42,.11);border:1px solid var(--bd);color:var(--gl);
+  padding:7px 20px;border-radius:100px;font-size:12px;letter-spacing:.04em;
+  backdrop-filter:blur(10px);z-index:7500;pointer-events:none;
+  transition:opacity .6s ease;white-space:nowrap
+}
+[contenteditable="true"]{outline:none;border-radius:3px;box-shadow:0 0 0 1px var(--gold),0 0 12px var(--gg);padding:1px 5px;cursor:text}
+
+/* ─── SHARED ─── */
+.slbl{font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;font-weight:400;margin-bottom:14px}
+.stit{font-family:'Noto Serif KR',serif;font-size:clamp(30px,3.8vw,54px);font-weight:700;color:var(--t1);margin-bottom:32px;position:relative}
+.stit::after{content:'';position:absolute;bottom:-11px;left:0;width:34px;height:2px;background:var(--gold)}
+
+/* ══════════════════════════════════
+   S1 – HERO
+══════════════════════════════════ */
+#s1{background:var(--bg)}
+.orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(110px);animation:flt 9s ease-in-out infinite}
+.o1{width:580px;height:580px;background:radial-gradient(circle,rgba(200,151,42,.34) 0%,transparent 70%);top:-170px;right:-70px}
+.o2{width:450px;height:450px;background:radial-gradient(circle,rgba(58,143,168,.27) 0%,transparent 70%);bottom:-130px;left:-70px;animation-delay:-4s}
+.o3{width:260px;height:260px;background:radial-gradient(circle,rgba(200,151,42,.17) 0%,transparent 70%);top:46%;left:43%;animation-delay:-6s}
+@keyframes flt{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-26px) scale(1.04)}}
+
+.hwrap{position:relative;z-index:1;text-align:center;max-width:900px}
+.heye{font-size:11px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:26px;font-weight:400;opacity:0;animation:fu .8s .3s forwards}
+.hh1{font-family:'Noto Serif KR',serif;font-size:clamp(36px,5vw,68px);font-weight:700;line-height:1.22;color:var(--t1);margin-bottom:28px;opacity:0;animation:fu .8s .55s forwards}
+.hh1 em{font-style:normal;background:linear-gradient(130deg,var(--gl),var(--gb),var(--gl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hrul{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 26px;opacity:0;animation:fu .8s .75s forwards}
+.hsub{font-family:'Noto Serif KR',serif;font-size:clamp(15px,1.7vw,23px);font-weight:300;color:var(--t2);letter-spacing:.06em;opacity:0;animation:fu .8s .95s forwards}
+.hsub strong{color:var(--t1);font-weight:600}
+.hscr{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fu .8s 1.4s forwards}
+.stxt{font-size:10px;letter-spacing:.22em;color:var(--t3);text-transform:uppercase}
+.slin{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sp 2.2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.3;transform:scaleY(.6)}}
+@keyframes fu{from{opacity:0;transform:translateY(17px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════
+   S2, S3 – METRICS
+══════════════════════════════════ */
+#s2{background:var(--bg2)}
+#s3{background:var(--bg)}
+
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:980px}
+.mc{
+  background:var(--bg3);border:1px solid var(--bd);border-radius:13px;
+  padding:36px 32px;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s
+}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.mc:hover{border-color:var(--gl);transform:translateY(-4px);box-shadow:0 18px 52px rgba(0,0,0,.5),0 0 32px var(--gg)}
+.mica{font-size:17px;margin-bottom:12px;opacity:.75}
+.mnum{
+  font-size:clamp(44px,5vw,68px);font-weight:800;line-height:1;
+  background:linear-gradient(135deg,var(--gl),var(--gb));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:9px
+}
+.mlbl{font-size:13px;color:var(--t2);font-weight:400;line-height:1.5}
+.mlbl small{font-size:11px;color:var(--t3);display:block;margin-top:2px}
+
+/* 회사명 배지 */
+.co-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(200,151,42,.08);border:1px solid var(--bd);
+  color:var(--gl);padding:5px 16px;border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:.1em;margin-bottom:20px
+}
+
+/* ══════════════════════════════════
+   S4 – ABOUT
+══════════════════════════════════ */
+#s4{background:var(--bg2)}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:60px;width:100%;max-width:1200px;align-items:center}
+.aname{font-family:'Noto Serif KR',serif;font-size:clamp(30px,3.6vw,50px);font-weight:700;color:var(--t1);margin-bottom:5px}
+.attl{font-size:15px;color:var(--gl);font-weight:500;margin-bottom:28px;letter-spacing:.04em}
+.adesc{font-size:13px;color:var(--t2);line-height:1.88;margin-bottom:28px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:rgba(200,151,42,.09);border:1px solid var(--bd);color:var(--gl);padding:6px 15px;border-radius:100px;font-size:12px;font-weight:500;transition:all .3s}
+.tag:hover{background:rgba(200,151,42,.18);border-color:var(--gold)}
+
+.tl{position:relative;padding-left:20px}
+.tlh{font-size:11px;letter-spacing:.2em;color:var(--t3);text-transform:uppercase;margin-bottom:26px}
+.tl::before{content:'';position:absolute;left:5px;top:34px;bottom:14px;width:1px;background:linear-gradient(to bottom,var(--gold),rgba(200,151,42,.1))}
+.tli{position:relative;margin-bottom:28px}
+.tli::before{content:'';position:absolute;left:-18px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 9px var(--gg)}
+.tlyr{font-size:11px;color:var(--gold);letter-spacing:.1em;margin-bottom:2px}
+.tlco{font-size:18px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.tlro{font-size:12px;color:var(--t2)}
+
+/* ══════════════════════════════════
+   S5, S6, S7 – CASE STUDIES
+══════════════════════════════════ */
+#s5{background:var(--bg)}
+#s6{background:var(--bg2)}
+#s7{background:var(--bg)}
+
+.ev{width:100%;max-width:1200px}
+.evhd{margin-bottom:16px}
+.rtags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.rt{background:rgba(58,143,168,.1);border:1px solid rgba(58,143,168,.27);color:var(--tl);padding:4px 12px;border-radius:100px;font-size:11px;font-weight:500}
+.rbs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.rb{background:linear-gradient(135deg,rgba(200,151,42,.13),rgba(200,151,42,.04));border:1px solid rgba(200,151,42,.29);color:var(--gl);padding:5px 15px;border-radius:7px;font-size:13px;font-weight:700}
+.rb-hero{background:linear-gradient(135deg,rgba(200,151,42,.28),rgba(200,151,42,.12));border:1px solid var(--gold);color:var(--gb);padding:7px 20px;border-radius:7px;font-size:15px;font-weight:700;box-shadow:0 0 18px var(--gg)}
+
+.icmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px}
+.ifr{position:relative;border-radius:9px;overflow:hidden;border:1px solid var(--bd);background:var(--bg3);height:240px}
+.ifr img{width:100%;height:100%;object-fit:cover;display:block}
+.ifr.nim img{display:none}
+.iph{display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:var(--bg3)}
+.ifr.nim .iph{display:flex}
+.phi{font-size:26px;opacity:.22}
+.pht{font-size:11px;color:var(--t3);text-align:center;max-width:150px;line-height:1.5;word-break:break-all}
+.ilbl{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.76));color:var(--t1);padding:16px 13px 9px;font-size:12px;font-weight:600;letter-spacing:.03em}
+
+.ecap{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;color:var(--t1);margin-bottom:5px}
+.esub{font-size:12px;color:var(--t3);letter-spacing:.03em}
+.obdg{display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,42,.09);border:1px solid var(--gold);color:var(--gl);padding:5px 16px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.08em;margin-top:9px}
+.bseal{width:15px;height:15px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:9px;font-weight:800;flex-shrink:0}
+
+/* ══════════════════════════════════
+   S8 – KCIA AWARD
+══════════════════════════════════ */
+#s8{background:var(--bg2)}
+
+.award-wrap{display:flex;align-items:center;gap:64px;width:100%;max-width:1100px}
+.award-photo{flex-shrink:0;width:320px;height:440px;border-radius:14px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 0 60px rgba(200,151,42,.15)}
+.award-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.award-photo.nim img{display:none}
+.award-photo.nim .iph{display:flex}
+.award-info{flex:1}
+.award-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(200,151,42,.2),rgba(200,151,42,.06));border:1px solid var(--gold);color:var(--gb);padding:8px 20px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.08em;margin-bottom:28px}
+.award-title{font-family:'Noto Serif KR',serif;font-size:clamp(22px,2.8vw,38px);font-weight:700;color:var(--t1);line-height:1.4;margin-bottom:16px}
+.award-title em{font-style:normal;color:var(--gl)}
+.award-desc{font-size:13px;color:var(--t2);line-height:1.9;margin-bottom:28px}
+.award-tags{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ══════════════════════════════════
+   S9 – REVENUE PROOF
+══════════════════════════════════ */
+#s9{background:#04040e}
+#s9.slide{justify-content:flex-start;padding-top:40px}
+
+.rev2-wrap{width:100%;flex:1;min-height:0;display:flex;flex-direction:column;gap:14px}
+.rev2-hd{flex-shrink:0}
+.rev2-title{font-family:'Noto Serif KR',serif;font-size:clamp(20px,2.6vw,34px);font-weight:700;color:var(--t1);margin-bottom:0;position:relative;display:inline-block}
+.rev2-title::after{content:'';position:absolute;bottom:-8px;left:0;width:28px;height:2px;background:var(--gold)}
+.rev2-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
+.rev2-col{display:flex;flex-direction:column;gap:10px;min-height:0}
+.rev2-img{flex:1;min-height:0;border-radius:10px;overflow:hidden;border:1px solid var(--bd);background:#07071a}
+.rev2-img img{width:100%;height:100%;object-fit:contain;object-position:center top;display:block}
+.rev2-img.nim img{display:none}
+.rev2-img.nim .iph{display:flex}
+.rev2-cap{font-size:13px;color:var(--t2);text-align:center;flex-shrink:0;letter-spacing:.02em;padding:4px 0}
+.rev2-cap strong{color:var(--gl);font-weight:700}
+.rev2-foot{font-size:11px;color:var(--t3);text-align:center;letter-spacing:.04em;flex-shrink:0;line-height:1.7}
+
+/* ══════════════════════════════════
+   S10 – SKILLS
+══════════════════════════════════ */
+#s10{background:var(--bg)}
+.skw{width:100%;max-width:1020px}
+.skgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.ski{background:var(--bg3);border:1px solid var(--bdl);border-radius:10px;padding:19px 20px;transition:border-color .3s,transform .3s}
+.ski:hover{border-color:var(--bd);transform:translateX(3px)}
+.skhd{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.skic{width:36px;height:36px;border-radius:8px;background:rgba(200,151,42,.09);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sknm{font-size:13px;font-weight:700;color:var(--t1);line-height:1.3}
+.sksb{font-size:11px;color:var(--t3);margin-top:2px}
+.sktr{height:3px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden}
+.skbar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gb));border-radius:100px;width:0;transition:width 1.1s cubic-bezier(.16,1,.3,1)}
+
+/* ══════════════════════════════════
+   S11 – CLOSING
+══════════════════════════════════ */
+#s11{background:var(--bg)}
+.cw{position:relative;z-index:1;text-align:center;max-width:840px;width:100%}
+.ch{font-family:'Noto Serif KR',serif;font-size:clamp(24px,3.6vw,48px);font-weight:700;color:var(--t1);line-height:1.3;margin-bottom:18px}
+.ch em{font-style:normal;color:var(--gl)}
+.csum{font-size:13px;color:var(--t2);line-height:1.9;margin-bottom:32px;max-width:620px;margin-left:auto;margin-right:auto}
+.astrip{display:flex;border:1px solid var(--bd);border-radius:9px;overflow:hidden;margin-bottom:32px}
+.ai{flex:1;padding:16px 10px;text-align:center;border-right:1px solid var(--bd);background:var(--bg3)}
+.ai:last-child{border-right:none}
+.an{font-size:19px;font-weight:800;color:var(--gl);line-height:1;margin-bottom:4px}
+.al{font-size:11px;color:var(--t3)}
+.cplist{list-style:none;margin:22px auto 28px;padding:0;max-width:560px;text-align:left}
+.cplist li{font-size:clamp(14px,1.6vw,18px);color:var(--t2);padding:12px 16px 12px 48px;margin-bottom:10px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;position:relative;line-height:1.5}
+.cplist li::before{content:'✓';position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:16px;font-weight:700;color:var(--gl)}
+.cbox{background:var(--bg3);border:1px solid var(--bd);border-radius:13px;padding:28px 38px;max-width:420px;margin:0 auto}
+.cbtl{font-size:11px;letter-spacing:.2em;color:var(--t3);text-transform:uppercase;margin-bottom:16px}
+.crow{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.crow:last-of-type{margin-bottom:0}
+.cic{width:32px;height:32px;background:rgba(200,151,42,.09);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ctxt{font-size:14px;color:var(--t1);font-weight:500}
+.chnt{font-size:10px;color:var(--t3);margin-top:14px;letter-spacing:.04em}
+
+/* ─── PRINT ─── */
+@media print{
+  body{overflow:visible;background:#fff;color:#111}
+  .sw{position:static;overflow:visible}
+  .slide{position:relative!important;opacity:1!important;transform:none!important;pointer-events:all!important;page-break-after:always;break-after:page;min-height:100vh;background:#fff!important;color:#111!important;animation:none!important}
+  .dots,.arrows,.ctr,.phint,.ehint,#pbar{display:none!important}
+  .orbs{display:none}
+  .hh1,.hsub,.heye{opacity:1!important;transform:none!important;animation:none!important}
+  .mnum{-webkit-text-fill-color:#a06a00!important}
+  *{animation:none!important;transition:none!important}
+  .skbar[style]{width:attr(data-lv %)!important}
+  .rev2-wrap{height:90vh}
+}
+
+@media(max-width:1366px){
+  .slide{padding:40px 52px}
+  #s9.slide{padding-top:32px}
+  .agrid{gap:36px}
+  .mgrid{gap:14px}
+  .ifr{height:200px}
+  .mnum{font-size:52px}
+  .award-wrap{gap:40px}
+  .award-photo{width:260px;height:360px}
+}
+</style>
+</head>
+<body>
+
+<div id="pbar" style="width:9.1%"></div>
+<div class="ehint" id="eh">✏️ 텍스트를 더블클릭하면 직접 편집할 수 있습니다</div>
+
+<nav class="dots" id="dts"></nav>
+<div class="arrows">
+  <button class="abtn" onclick="go(-1)">←</button>
+  <button class="abtn" onclick="go(1)">→</button>
+</div>
+<div class="ctr" id="ct">01 / 11</div>
+<div class="phint">Ctrl+P · Cmd+P → PDF 저장</div>
+
+<div class="sw">
+
+<!-- ① HERO -->
+<section class="slide active" id="s1">
+  <div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+  <div class="hwrap">
+    <div class="heye">Digital Marketing Portfolio</div>
+    <h1 class="hh1">당신이 찾던<br><em>마케터가 여기 있습니다</em></h1>
+    <div class="hrul"></div>
+    <p class="hsub"><strong>10년차 디지털 마케터</strong>&ensp;양시현</p>
+  </div>
+  <div class="hscr"><span class="stxt">Scroll</span><div class="slin"></div></div>
+</section>
+
+<!-- ② ABOUT -->
+<section class="slide" id="s4">
+  <div class="agrid">
+    <div>
+      <div class="slbl">About Me</div>
+      <div class="aname">양시현</div>
+      <div class="attl">10년차 디지털 마케터</div>
+      <p class="adesc">데이터 기반의 퍼포먼스 마케팅으로 실제 매출을 만드는 마케터입니다.<br>네이버 광고부터 Meta, 스마트스토어 운영까지 디지털 마케팅 풀사이클을 직접 운영하며 증명된 성과를 쌓아왔습니다.</p>
+      <div class="tags">
+        <span class="tag">네이버 SA/GFA</span><span class="tag">Meta 광고</span>
+        <span class="tag">스마트스토어</span><span class="tag">상세페이지 기획</span>
+        <span class="tag">SEO</span><span class="tag">데이터 분석</span>
+      </div>
+    </div>
+    <div class="tl">
+      <div class="tlh">Career Timeline</div>
+      <div class="tli">
+        <div class="tlyr">2017</div>
+        <div class="tlco">바베큐타운</div>
+        <div class="tlro">디지털 마케터 — 네이버 SA · 스마트스토어 · SEO</div>
+      </div>
+      <div class="tli">
+        <div class="tlyr">2022</div>
+        <div class="tlco">에프에스</div>
+        <div class="tlro">디지털 마케터 — 퍼포먼스 마케팅</div>
+      </div>
+      <div class="tli">
+        <div class="tlyr">2025</div>
+        <div class="tlco">비욘드릴렉스</div>
+        <div class="tlro">디지털 마케터 — SA/GFA · Meta · 스마트스토어 · 브랜드스토어</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 바베큐타운 핵심 성과 -->
+<section class="slide" id="s2">
+  <div class="slbl">Key Performance</div>
+  <div class="stit">바베큐타운 핵심 성과</div>
+  <div class="co-badge">🏢 &nbsp;바베큐타운 · 2017 ~ 2022</div>
+  <div class="mgrid">
+    <div class="mc">
+      <div class="mica">📈</div>
+      <div class="mnum">3,000%</div>
+      <div class="mlbl">SA ROAS 달성<small>네이버 검색광고 최고 기록</small></div>
+    </div>
+    <div class="mc" data-cnt="10" data-sfx="배" data-dur="1600">
+      <div class="mica">🚀</div>
+      <div class="mnum">0배</div>
+      <div class="mlbl">매출 성장<small>입사 대비 달성</small></div>
+    </div>
+    <div class="mc">
+      <div class="mica">🏆</div>
+      <div class="mnum">달성</div>
+      <div class="mlbl">네이버 프리미엄 등급<small>스마트스토어</small></div>
+    </div>
+    <div class="mc">
+      <div class="mica">🔍</div>
+      <div class="mnum">5년</div>
+      <div class="mlbl">SA · 스마트스토어 · SEO<small>풀사이클 직접 운영</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 비욘드릴렉스 핵심 성과 -->
+<section class="slide" id="s3">
+  <div class="slbl">Key Performance</div>
+  <div class="stit">비욘드릴렉스 핵심 성과</div>
+  <div class="co-badge">✨ &nbsp;비욘드릴렉스 · 2025</div>
+  <div class="mgrid">
+    <div class="mc" data-cnt="10000" data-sfx="%" data-dur="2200">
+      <div class="mica">📈</div>
+      <div class="mnum">0%</div>
+      <div class="mlbl">GFA ROAS 최대 달성<small>네이버 GFA 최고 기록</small></div>
+    </div>
+    <div class="mc" data-cnt="16.6" data-sfx="억" data-dec="1" data-dur="1800">
+      <div class="mica">💰</div>
+      <div class="mnum">0억</div>
+      <div class="mlbl">연매출 달성<small>2025년 스마트스토어 기준</small></div>
+    </div>
+    <div class="mc" data-cnt="4" data-sfx="배" data-dur="1400">
+      <div class="mica">🚀</div>
+      <div class="mnum">0배</div>
+      <div class="mlbl">매출 성장<small>1년 만에 달성</small></div>
+    </div>
+    <div class="mc">
+      <div class="mica">🏆</div>
+      <div class="mnum">달성</div>
+      <div class="mlbl">네이버 프리미엄 등급<small>입사 5개월만에 달성</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ BBQTOWN CASE -->
+<section class="slide" id="s5">
+  <div class="ev">
+    <div class="evhd">
+      <div class="slbl">Case Study 01</div>
+      <div class="stit" style="margin-bottom:14px">바베큐타운 → 스테츠 성과</div>
+      <div class="rtags"><span class="rt">네이버 SA 광고 운영</span><span class="rt">스마트스토어 운영</span><span class="rt">SEO</span></div>
+      <div class="rbs"><span class="rb">SA ROAS 3,000%</span><span class="rb">매출 10배 성장</span><span class="rb">프리미엄 등급 달성</span></div>
+    </div>
+    <div class="icmp">
+      <div class="ifr"><img src="images/바베큐타운.png" alt="바베큐타운" onerror="this.closest('.ifr').classList.add('nim')"><div class="iph"><div class="phi">🏢</div><div class="pht">images/바베큐타운.png</div></div><div class="ilbl">입사 전 (바베큐타운)</div></div>
+      <div class="ifr"><img src="images/스테츠.png" alt="스테츠" onerror="this.closest('.ifr').classList.add('nim')"><div class="iph"><div class="phi">🏛️</div><div class="pht">images/스테츠.png</div></div><div class="ilbl">입사 후 (스테츠 — 새 사옥)</div></div>
+    </div>
+    <div class="ecap">매출 성장으로 회사의 사옥 이전에 함께했습니다</div>
+  </div>
+</section>
+
+<!-- ⑥ BEYOND RELAX SA -->
+<section class="slide" id="s6" style="justify-content:flex-start;padding-top:40px">
+  <div class="rev2-wrap">
+    <div class="rev2-hd">
+      <div class="rev2-title">SA 광고 성과 비교 (입사 전 vs 후)</div>
+    </div>
+    <div class="rev2-grid">
+      <div class="rev2-col">
+        <div class="rev2-img">
+          <img src="images/SA_24년%2011월.png" alt="SA 2024년 11월" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">📊</div><div class="pht">images/SA_24년 11월.png</div></div>
+        </div>
+        <div class="rev2-cap">SA 2024년 11월 &nbsp;/&nbsp; <strong>입사 전</strong></div>
+        <div class="rev2-img">
+          <img src="images/SA_24년%2012월.png" alt="SA 2024년 12월" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">📊</div><div class="pht">images/SA_24년 12월.png</div></div>
+        </div>
+        <div class="rev2-cap">SA 2024년 12월 &nbsp;/&nbsp; <strong>입사 전</strong></div>
+      </div>
+      <div class="rev2-col">
+        <div class="rev2-img">
+          <img src="images/SA_25년%2011월.png" alt="SA 2025년 11월" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">📈</div><div class="pht">images/SA_25년 11월.png</div></div>
+        </div>
+        <div class="rev2-cap">SA 2025년 11월 &nbsp;/&nbsp; <strong>입사 후</strong></div>
+        <div class="rev2-img">
+          <img src="images/SA_25년%2012월.png" alt="SA 2025년 12월" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">📈</div><div class="pht">images/SA_25년 12월.png</div></div>
+        </div>
+        <div class="rev2-cap">SA 2025년 12월 &nbsp;/&nbsp; <strong>입사 후</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ GFA PERFORMANCE -->
+<section class="slide" id="s7" style="justify-content:flex-start;padding-top:40px">
+  <div class="rev2-wrap">
+    <div class="rev2-hd">
+      <div class="rev2-title">GFA 광고 성과 비교 (입사 전 vs 후)</div>
+    </div>
+    <div class="rev2-grid">
+      <div class="rev2-col">
+        <div class="rev2-img">
+          <img src="images/Gfa_24년%2012월.png" alt="2024년 12월 GFA" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">📊</div><div class="pht">images/Gfa_24년 12월.png</div></div>
+        </div>
+        <div class="rev2-cap">2024년 12월 &nbsp;/&nbsp; <strong>입사 전</strong></div>
+      </div>
+      <div class="rev2-col">
+        <div class="rev2-img">
+          <img src="images/gfa_25년%2012월.png" alt="2025년 12월 GFA" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">📈</div><div class="pht">images/gfa_25년 12월.png</div></div>
+        </div>
+        <div class="rev2-cap">2025년 12월 &nbsp;/&nbsp; <strong>입사 후</strong></div>
+      </div>
+    </div>
+    <div class="rev2-foot">
+      GFA ROAS 10,000% 달성<br>
+      동일 광고비 대비 매출 100배 이상 성장
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ KCIA AWARD -->
+<section class="slide" id="s8">
+  <div class="award-wrap">
+    <div class="award-photo" id="awardPhoto">
+      <img src="images/2025%20kcia.jpg" alt="2025 KCIA 수상" onerror="this.closest('.award-photo').classList.add('nim')">
+      <div class="iph"><div class="phi">🏆</div><div class="pht">images/2025 kcia.jpg</div></div>
+    </div>
+    <div class="award-info">
+      <div class="award-badge">🏆 &nbsp;Award &amp; Recognition</div>
+      <div class="award-title">2025 KCIA<br><em>한국소비자산업평가 수상</em></div>
+      <p class="award-desc">비욘드릴렉스 브랜드의 마케팅 성과를 인정받아<br>2025 한국소비자산업평가에서 수상했습니다.<br>광고 운영·매출 성장·브랜드 인지도 제고까지<br>풀사이클 마케팅의 결과입니다.</p>
+      <div class="award-tags">
+        <span class="tag">비욘드릴렉스</span>
+        <span class="tag">브랜드 마케팅</span>
+        <span class="tag">수상 실적</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ REVENUE PROOF -->
+<section class="slide" id="s9">
+  <div class="rev2-wrap">
+    <div class="rev2-hd">
+      <div class="slbl">Revenue Proof</div>
+      <div class="rev2-title">네이버 스마트스토어 연매출 성장</div>
+    </div>
+    <div class="rev2-grid">
+      <div class="rev2-col">
+        <div class="rev2-img" id="rev24">
+          <img src="images/매출전표_24년도.png" alt="2024 매출전표" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">🧾</div><div class="pht">images/매출전표_24년도.png</div></div>
+        </div>
+        <div class="rev2-cap">2024년 &nbsp;/&nbsp; <strong>과세매출 4억 6천만원</strong></div>
+      </div>
+      <div class="rev2-col">
+        <div class="rev2-img" id="rev25">
+          <img src="images/매출전표_25년도.png" alt="2025 매출전표" onerror="this.closest('.rev2-img').classList.add('nim')">
+          <div class="iph"><div class="phi">🧾</div><div class="pht">images/매출전표_25년도.png</div></div>
+        </div>
+        <div class="rev2-cap">2025년 &nbsp;/&nbsp; <strong>과세매출 16억 6천만원</strong></div>
+      </div>
+    </div>
+    <div class="rev2-foot">
+      네이버 스마트스토어 부가세 신고 공식 데이터 기준<br>
+      1년만에 매출 약 4배 성장
+    </div>
+  </div>
+</section>
+
+<!-- ⑩ SKILLS -->
+<section class="slide" id="s10">
+  <div class="skw">
+    <div class="slbl">Expertise</div>
+    <div class="stit" style="margin-bottom:28px">보유 스킬</div>
+    <div class="skgrid" id="skgrid">
+      <div class="ski" data-lv="95"><div class="skhd"><div class="skic">🔍</div><div><div class="sknm">네이버 검색광고 (SA)</div><div class="sksb">파워링크 · 쇼핑검색 · 브랜드검색</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+      <div class="ski" data-lv="90"><div class="skhd"><div class="skic">📺</div><div><div class="sknm">네이버 GFA</div><div class="sksb">디스플레이 광고 · 리타겟팅</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+      <div class="ski" data-lv="88"><div class="skhd"><div class="skic">📱</div><div><div class="sknm">Meta 광고</div><div class="sksb">페이스북 · 인스타그램</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+      <div class="ski" data-lv="93"><div class="skhd"><div class="skic">🛒</div><div><div class="sknm">스마트스토어 운영</div><div class="sksb">등급 관리 · 상품 최적화</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+      <div class="ski" data-lv="86"><div class="skhd"><div class="skic">🎨</div><div><div class="sknm">상세페이지 기획</div><div class="sksb">구매 전환 최적화 기획</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+      <div class="ski" data-lv="84"><div class="skhd"><div class="skic">🌐</div><div><div class="sknm">SEO 최적화</div><div class="sksb">키워드 리서치 · 콘텐츠 SEO</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+      <div class="ski" data-lv="88" style="grid-column:1/-1"><div class="skhd"><div class="skic">📊</div><div><div class="sknm">데이터 분석 및 리포팅</div><div class="sksb">성과 분석 · 인사이트 도출 · 개선안 제시</div></div></div><div class="sktr"><div class="skbar"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑪ CLOSING -->
+<section class="slide" id="s11">
+  <div class="orbs">
+    <div class="orb o2" style="top:-150px;right:-70px;bottom:auto;left:auto"></div>
+    <div class="orb o1" style="bottom:-170px;left:-70px;top:auto;right:auto"></div>
+  </div>
+  <div class="cw">
+    <div class="slbl" style="text-align:center;margin-bottom:14px">Let's Work Together</div>
+    <h2 class="ch">저를 채용하시면<br><em>이런 결과를 만들어 드립니다</em></h2>
+    <ul class="cplist">
+      <li>최소한의 광고비로 최고의 효율을 만들어 냅니다</li>
+      <li>스마트스토어 등급을 체계적으로 성장시킵니다</li>
+      <li>데이터 기반으로 매달 성과를 개선합니다</li>
+      <li>혼자서 기획부터 운영까지 전부 가능합니다</li>
+    </ul>
+    <div class="cbox">
+      <div class="cbtl">Contact</div>
+      <div class="crow"><div class="cic">✉️</div><div class="ctxt">freewill0905@naver.com</div></div>
+      <div class="crow"><div class="cic">📞</div><div class="ctxt">010-4227-8127</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+// ── SLIDE ENGINE ────────────────────────────────────────
+const N=11;let cur=0,busy=false;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dts');
+const ctEl=document.getElementById('ct');
+const pbar=document.getElementById('pbar');
+const fired=new Set();
+
+for(let i=0;i<N;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' on':'');
+  d.addEventListener('click',()=>jump(i));
+  dotsEl.appendChild(d);
+}
+
+function jump(idx){
+  if(busy||idx===cur||idx<0||idx>=N)return;
+  busy=true;
+  const dir=idx>cur?1:-1;
+  const ps=slides[cur],ns=slides[idx];
+  ps.classList.add(dir>0?'exit-u':'exit-d');
+  ps.classList.remove('active');
+  setTimeout(()=>{
+    ps.classList.remove('exit-u','exit-d');
+    ns.classList.add('active');
+    cur=idx;ui();
+    setTimeout(()=>{busy=false;enter(idx);},640);
+  },310);
+}
+function go(d){jump(cur+d)}
+
+function ui(){
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  ctEl.textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  pbar.style.width=((cur+1)/N*100)+'%';
+}
+
+// ── ENTER ANIMATIONS ────────────────────────────────────
+function enter(idx){
+  const id='s'+(idx+1);
+  if(fired.has(id))return;
+  fired.add(id);
+  if(idx===2){
+    document.querySelectorAll('#s2 .mc[data-cnt]').forEach(c=>{
+      const to=parseFloat(c.dataset.cnt),sfx=c.dataset.sfx||'',dec=parseInt(c.dataset.dec)||0,dur=parseInt(c.dataset.dur)||2000;
+      countUp(c.querySelector('.mnum'),0,to,dur,'',sfx,dec);
+    });
+  }
+  if(idx===3){
+    document.querySelectorAll('#s3 .mc[data-cnt]').forEach(c=>{
+      const to=parseFloat(c.dataset.cnt),sfx=c.dataset.sfx||'',dec=parseInt(c.dataset.dec)||0,dur=parseInt(c.dataset.dur)||2000;
+      countUp(c.querySelector('.mnum'),0,to,dur,'',sfx,dec);
+    });
+  }
+  if(idx===9){
+    document.querySelectorAll('#s10 .ski').forEach((it,i)=>{
+      const lv=parseInt(it.dataset.lv)||80;
+      setTimeout(()=>it.querySelector('.skbar').style.width=lv+'%',i*90);
+    });
+  }
+}
+
+function countUp(el,from,to,dur,pfx,sfx,dec){
+  const t0=performance.now();
+  function tick(now){
+    const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3),v=from+(to-from)*e;
+    el.textContent=pfx+(dec?v.toFixed(dec):Math.floor(v).toLocaleString('ko-KR'))+sfx;
+    if(p<1)requestAnimationFrame(tick);
+    else el.textContent=pfx+(dec?to.toFixed(dec):to.toLocaleString('ko-KR'))+sfx;
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── KEYBOARD ────────────────────────────────────────────
+document.addEventListener('keydown',e=>{
+  if(document.activeElement?.contentEditable==='true')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(1);}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(-1);}
+  else if(e.key==='Escape')document.activeElement?.blur();
+});
+
+// ── WHEEL ───────────────────────────────────────────────
+let wt;
+document.addEventListener('wheel',e=>{clearTimeout(wt);wt=setTimeout(()=>go(e.deltaY>0?1:-1),55);},{passive:true});
+
+// ── TOUCH ───────────────────────────────────────────────
+let ty0=0;
+document.addEventListener('touchstart',e=>{ty0=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{const d=ty0-e.changedTouches[0].clientY;if(Math.abs(d)>50)go(d>0?1:-1);},{passive:true});
+
+// ── DOUBLE-CLICK EDITING ────────────────────────────────
+const ETAGS=new Set(['H1','H2','H3','H4','P','SPAN']);
+const SKIP=['dots','arrows','orbs','orb','ehint','sktr','skbar','slin','bseal','phi'];
+
+document.addEventListener('dblclick',e=>{
+  let el=e.target;
+  for(let i=0;i<5;i++){
+    if(!el||el===document.body)break;
+    const cls=(el.className||'').toString();
+    if(SKIP.some(s=>cls.includes(s))){el=el.parentElement;continue;}
+    if((ETAGS.has(el.tagName)||el.tagName==='DIV')&&el.textContent.trim()&&!el.querySelector('div,p,section')){
+      el.contentEditable='true';el.focus();
+      const r=document.createRange();r.selectNodeContents(el);r.collapse(false);
+      const s=window.getSelection();s.removeAllRanges();s.addRange(r);
+      break;
+    }
+    el=el.parentElement;
+  }
+});
+
+document.addEventListener('blur',e=>{
+  if(e.target.contentEditable==='true')e.target.contentEditable='false';
+},true);
+
+// ── EDIT HINT ───────────────────────────────────────────
+const eh=document.getElementById('eh');
+setTimeout(()=>{
+  eh.style.opacity='1';
+  setTimeout(()=>{eh.style.opacity='0';setTimeout(()=>eh.style.display='none',600);},4500);
+},1200);
+
+ui();
+</script>
+</body>
+</html>
